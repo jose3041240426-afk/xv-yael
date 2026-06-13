@@ -12,7 +12,7 @@ declare global {
 const VIDEO_ID = 'OMOGaugKpzs';
 
 export default function MusicPlayer() {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const playerRef = useRef<any>(null);
   const playerReadyRef = useRef(false);
@@ -24,7 +24,7 @@ export default function MusicPlayer() {
         width: '0',
         videoId: VIDEO_ID,
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           controls: 0,
           disablekb: 1,
           fs: 0,
@@ -34,6 +34,7 @@ export default function MusicPlayer() {
         events: {
           onReady: () => {
             playerReadyRef.current = true;
+            playerRef.current?.playVideo();
           },
         },
       });
