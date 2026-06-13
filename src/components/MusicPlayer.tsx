@@ -2,27 +2,78 @@ import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: (() => void) | undefined;
+  }
+}
+
+const VIDEO_ID = 'OMOGaugKpzs';
+
 export default function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  // Note: Placeholder audio, to be replaced by user
-  const audioUrl = "https://cdn.pixabay.com/download/audio/2022/10/25/audio_73bc1ba61b.mp3?filename=elegant-piano-123495.mp3";
+  const playerRef = useRef<any>(null);
+  const playerReadyRef = useRef(false);
 
   useEffect(() => {
-    if (audioRef.current) {
+    const createPlayer = () => {
+      playerRef.current = new window.YT.Player('youtube-player', {
+        height: '0',
+        width: '0',
+        videoId: VIDEO_ID,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          loop: 1,
+          playlist: VIDEO_ID,
+        },
+        events: {
+          onReady: () => {
+            playerReadyRef.current = true;
+          },
+        },
+      });
+    };
+
+    if (window.YT && window.YT.loaded) {
+      createPlayer();
+    } else {
+      window.onYouTubeIframeAPIReady = createPlayer;
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+    }
+
+    return () => {
+      playerRef.current?.destroy();
+      playerRef.current = null;
+      playerReadyRef.current = false;
+      window.onYouTubeIframeAPIReady = undefined;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (playerRef.current && playerReadyRef.current) {
       if (isPlaying) {
-        audioRef.current.play().catch(e => console.log("Audio play blocked by browser:", e));
+        playerRef.current.playVideo();
       } else {
-        audioRef.current.pause();
+        playerRef.current.pauseVideo();
       }
     }
   }, [isPlaying]);
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.muted = isMuted;
+    if (playerRef.current && playerReadyRef.current) {
+      if (isMuted) {
+        playerRef.current.mute();
+      } else {
+        playerRef.current.unMute();
+      }
     }
   }, [isMuted]);
 
@@ -33,7 +84,7 @@ export default function MusicPlayer() {
       transition={{ delay: 3, duration: 1 }}
       className="fixed bottom-6 right-6 z-50 glass-gold p-3 rounded-full flex items-center gap-3 shadow-2xl"
     >
-      <audio ref={audioRef} src={audioUrl} loop preload="auto" />
+      <div id="youtube-player" />
       
       <button 
         onClick={() => setIsPlaying(!isPlaying)}
