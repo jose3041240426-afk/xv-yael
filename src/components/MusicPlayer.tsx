@@ -13,7 +13,8 @@ const VIDEO_ID = 'OMOGaugKpzs';
 
 export default function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const hasInteractedRef = useRef(false);
   const playerRef = useRef<any>(null);
   const playerReadyRef = useRef(false);
 
@@ -25,6 +26,7 @@ export default function MusicPlayer() {
         videoId: VIDEO_ID,
         playerVars: {
           autoplay: 1,
+          mute: 1,
           controls: 0,
           disablekb: 1,
           fs: 0,
@@ -34,7 +36,6 @@ export default function MusicPlayer() {
         events: {
           onReady: () => {
             playerReadyRef.current = true;
-            playerRef.current?.playVideo();
           },
         },
       });
@@ -88,10 +89,17 @@ export default function MusicPlayer() {
       <div id="youtube-player" />
       
       <button 
-        onClick={() => setIsPlaying(!isPlaying)}
+        onClick={() => {
+          hasInteractedRef.current = true;
+          if (isPlaying && isMuted) {
+            setIsMuted(false);
+          } else {
+            setIsPlaying(!isPlaying);
+          }
+        }}
         className="w-10 h-10 rounded-full bg-gold flex items-center justify-center text-navy hover:scale-110 transition-transform"
       >
-        {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="ml-1" />}
+        {isPlaying && isMuted ? <VolumeX size={20} /> : isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="ml-1" />}
       </button>
 
       {isPlaying && (
