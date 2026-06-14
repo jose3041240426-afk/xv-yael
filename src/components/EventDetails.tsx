@@ -1,61 +1,56 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { CalendarDays, MapPin } from 'lucide-react';
+
+
+const ToastGlassesIcon = () => (
+  <svg viewBox="0 0 100 100" className="w-10 h-10 stroke-gold stroke-[3] fill-none mb-3">
+    <path d="M38 25 L48 45 L48 75 M40 75 L56 75 M35 25 L53 25 L48 45" />
+    <path d="M62 25 L52 45 L52 75 M60 75 L44 75 M65 25 L47 25 L52 45" />
+    <path d="M50 12 L50 18 M47 15 L53 15" strokeWidth="2.5" />
+  </svg>
+);
 
 export default function EventDetails() {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.15 });
 
   return (
-    <section className="py-24 md:py-32 bg-dark" ref={ref}>
-      <div className="max-w-4xl mx-auto px-6 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+    <section ref={ref} className="py-24 bg-black text-white w-full flex flex-col items-center justify-center select-none px-6">
+      <div className="w-full max-w-sm flex flex-col items-center gap-20">
+        
+
+        {/* Reception */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="font-serif text-2xl md:text-4xl text-gold mb-14"
+          transition={{ duration: 1.2, delay: 0.25 }}
+          className="flex flex-col items-center text-center w-full"
         >
-          Dónde y Cuándo
-        </motion.h2>
-
-        <div className="flex flex-col md:flex-row justify-center gap-6">
-          {/* Date & Time Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="glass-card glass-card-hover flex-1 p-10 flex flex-col items-center"
+          {/* Toast glasses icon */}
+          <ToastGlassesIcon />
+          
+          <h2 className="font-script text-4xl text-gradient-gold mb-2 font-medium">
+            Recepción
+          </h2>
+          
+          <p className="font-cinzel text-[10px] md:text-xs tracking-[0.2em] text-white/80 uppercase max-w-[280px] leading-relaxed">
+            SALÓN GRAN QUINTA
+            <br />
+            <span className="text-gold">| 9:00 P.M. |</span>
+          </p>
+          
+          <a
+            href="https://maps.google.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-6 py-2 border border-gold/30 hover:border-gold text-white/90 hover:text-white font-cinzel text-[10px] tracking-[0.2em] uppercase rounded-md bg-[#030a16]/30 hover:bg-[#030a16]/60 cursor-pointer mt-4 transition-all duration-300"
           >
-            <CalendarDays size={40} className="text-gold mb-5" strokeWidth={1} />
-            <h3 className="font-serif text-xl text-white mb-3">Fecha y Hora</h3>
-            <p className="font-sans font-light text-gray-300 text-sm">Viernes, 10 de Julio 2026</p>
-            <p className="font-sans font-light text-gray-300 text-sm">9:00 PM</p>
-          </motion.div>
+            📍 IR AL MAPA
+          </a>
+        </motion.div>
 
-          {/* Location Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="glass-card glass-card-hover flex-1 p-10 flex flex-col items-center"
-          >
-            <MapPin size={40} className="text-gold mb-5" strokeWidth={1} />
-            <h3 className="font-serif text-xl text-white mb-3">Recepción</h3>
-            <p className="font-sans font-light text-gray-300 text-sm mb-6 text-center">
-              Salón Gran Quinta
-              <br />
-              Dirección Pendiente
-            </p>
-            <a
-              href="https://maps.google.com"
-              target="_blank"
-              rel="noreferrer"
-              className="btn-gold"
-            >
-              Ver Ubicación
-            </a>
-          </motion.div>
-        </div>
       </div>
     </section>
   );
 }
+
+

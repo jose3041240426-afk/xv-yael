@@ -1,18 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Pinyon+Script&family=Poppins:wght@200;300;400;500;600&display=swap');
 
 @import "tailwindcss";
 
 @theme {
   --color-navy: #081A3A;
+  --color-navy-deep: #020813;
+  --color-navy-glow: #0f2b5c;
   --color-gold: #D4AF37;
   --color-gold-light: #F3E5AB;
-  --color-black: #0A0A0A;
+  --color-gold-dark: #A67C1E;
+  --color-black: #000000;
   --color-white: #FFFFFF;
   --color-dark: #040c1c;
 
-  --font-serif: 'Cinzel', serif;
-  --font-sans: 'Montserrat', sans-serif;
+  --font-cinzel: 'Cinzel', serif;
+  --font-cormorant: 'Cormorant Garamond', serif;
+  --font-script: 'Alex Brush', cursive;
+  --font-script-luxury: 'Pinyon Script', cursive;
+  --font-sans: 'Poppins', sans-serif;
 }
+
 
 /* ── Base ── */
 html {
@@ -20,63 +27,95 @@ html {
 }
 
 body {
-  background-color: #0A0A0A;
+  background-color: #000000;
   color: #FFFFFF;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
 /* ── Custom Scrollbar ── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #0A0A0A; }
-::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 9999px; }
-
-/* ── Reusable Classes ── */
-.glass-card {
-  background: rgba(8, 26, 58, 0.35);
-  border: 1px solid rgba(212, 175, 55, 0.15);
-  border-radius: 1.5rem;
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #D4AF37, #081A3A);
+  border-radius: 9999px;
 }
 
-.glass-card-hover {
-  transition: border-color 0.4s ease, transform 0.4s ease;
-}
-.glass-card-hover:hover {
-  border-color: rgba(212, 175, 55, 0.4);
-  transform: translateY(-4px);
-}
-
+/* ── Luxury Decorative Elements ── */
 .text-gradient-gold {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(135deg, #D4AF37 0%, #F3E5AB 50%, #D4AF37 100%);
+  background-image: linear-gradient(135deg, #A67C1E 0%, #F3E5AB 50%, #D4AF37 100%);
 }
 
-.gold-line {
-  width: 60px;
+.gold-divider-fine {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(180deg, transparent, #D4AF37, transparent);
+  margin: 0 auto;
+}
+
+.gold-line-fine {
+  width: 80px;
   height: 1px;
   background: linear-gradient(90deg, transparent, #D4AF37, transparent);
   margin: 0 auto;
 }
 
-.btn-gold {
+.btn-magazine {
   display: inline-block;
-  padding: 0.875rem 2.5rem;
-  border: 1px solid #D4AF37;
+  padding: 0.75rem 2.25rem;
+  border: 1px solid rgba(212, 175, 55, 0.4);
   color: #D4AF37;
-  border-radius: 9999px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
-  font-size: 0.8rem;
-  letter-spacing: 0.15em;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  text-decoration: none;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  background: transparent;
+  transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
 }
-.btn-gold:hover {
-  background-color: #D4AF37;
-  color: #081A3A;
+
+.btn-magazine:hover {
+  border-color: #D4AF37;
+  color: #FFFFFF;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+  transform: translateY(-2px);
 }
+
+/* Luxury Card (Magazine-like, no heavy shadow, delicate border) */
+.magazine-panel {
+  background: rgba(3, 10, 22, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  backdrop-filter: blur(12px);
+}
+
+.bg-magazine-radial {
+  background: radial-gradient(circle at center, rgba(8, 26, 58, 0.25) 0%, rgba(0, 0, 0, 1) 100%);
+}
+
+/* Slow keyframe animations for luxury glows */
+@keyframes luxuryGlow {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.05);
+  }
+}
+
+.glow-luxury {
+  animation: luxuryGlow 8s ease-in-out infinite;
+}
+

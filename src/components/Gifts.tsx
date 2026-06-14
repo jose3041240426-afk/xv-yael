@@ -1,26 +1,40 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Mail } from 'lucide-react';
+
+const EnvelopeIcon = () => (
+  <svg viewBox="0 0 100 100" className="w-16 h-16 stroke-gold stroke-[2.2] fill-none mb-3">
+    <rect x="15" y="28" width="70" height="44" rx="2" />
+    <path d="M15 28 L50 55 L85 28" />
+  </svg>
+);
 
 export default function Gifts() {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.4 });
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.25 });
 
   return (
-    <section className="py-24 md:py-32 bg-dark" ref={ref}>
-      <div className="max-w-xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="glass-card p-12 text-center"
-        >
-          <Mail size={36} className="text-gold mx-auto mb-6" strokeWidth={1} />
-          <h2 className="font-serif text-2xl md:text-3xl text-white mb-5">Mesa de Regalos</h2>
-          <p className="font-sans font-light text-gray-300 text-base md:text-lg leading-relaxed">
-            "Su presencia será nuestro mejor regalo. Si desea obsequiarnos algo, agradeceremos que sea en un sobre."
-          </p>
-        </motion.div>
-      </div>
+    <section ref={ref} className="py-20 bg-black text-white w-full flex flex-col items-center justify-center select-none px-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+        className="w-full max-w-sm flex flex-col items-center text-center"
+      >
+        <h2 className="font-script text-4xl text-gradient-gold mb-4 font-medium">
+          Regalos
+        </h2>
+        
+        <EnvelopeIcon />
+        
+        <p className="font-cinzel text-xs tracking-[0.2em] text-white/90 uppercase font-bold mt-2">
+          "Lluvia de sobres"
+        </p>
+        
+        <p className="font-sans font-light text-white/45 text-[10px] md:text-xs tracking-wider mt-3 uppercase max-w-[280px] leading-relaxed">
+          Agradecemos tu presencia y si deseas obsequiarnos un detalle, el día del evento contaremos con una urna para depositar tu sobre.
+        </p>
+      </motion.div>
     </section>
   );
 }
+
+
