@@ -8,16 +8,13 @@ import Gifts from './components/Gifts';
 import Gallery from './components/Gallery';
 import RSVP from './components/RSVP';
 import GoldParticles from './components/GoldParticles';
-// import Maintenance from './components/Maintenance'; // ← descomentar si se activa
+import Maintenance from './components/Maintenance';
 
-// ── Cambiar a true para mostrar la pantalla "En preparación" ──
 const MAINTENANCE = false;
 
 function App() {
-  // if (MAINTENANCE) return <Maintenance />;
   if (MAINTENANCE) {
-    const M = require('./components/Maintenance').default;
-    return <M />;
+    return <Maintenance />;
   }
 
   return (
