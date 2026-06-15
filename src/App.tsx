@@ -10,7 +10,7 @@ import RSVP from './components/RSVP';
 import GoldParticles from './components/GoldParticles';
 import Maintenance from './components/Maintenance';
 
-const MAINTENANCE = false;
+const MAINTENANCE = true;
 
 function App() {
   if (MAINTENANCE) {
@@ -21,7 +21,7 @@ function App() {
     <div className="relative bg-black text-white min-h-screen font-sans overflow-x-hidden">
       {/* Global Background Particle Effect */}
       <GoldParticles />
-      
+
       {/* Scrollable Layout sections */}
       <div className="relative z-10 w-full flex flex-col">
         <Hero />
